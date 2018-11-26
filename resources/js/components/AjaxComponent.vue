@@ -38,7 +38,7 @@
         methods: {
             update: function() {
                 this.is_refresh = true;
-                axios.get("/start/getjson").then((response) => {
+                    axios.get("/start/getjson").then((response) => {
                     console.log(response);
                     this.urldata = response.data;
                     this.is_refresh = false;

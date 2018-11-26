@@ -6,7 +6,9 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        <input type="text" v-on:input="changename">
+                        <h1>Example input : {{ name }}</h1>
+                        <a v-bind:href="url">github (pirogandrej)</a>
                     </div>
                 </div>
             </div>
@@ -16,8 +18,19 @@
 
 <script>
     export default {
+        data: function () {
+            return {
+                name: '',
+                url: 'http://github.com/pirogandrej'
+            }
+        },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods:{
+            changename: function (event) {
+                this.name = event.target.value;
+            }
         }
     }
 </script>

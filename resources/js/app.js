@@ -20,6 +20,9 @@ window.Vue = require('vue');
 Vue.component('start-component', require('./components/StartComponent.vue'));
 Vue.component('data-component', require('./components/DataComponent.vue'));
 Vue.component('ajax-component', require('./components/AjaxComponent.vue'));
+Vue.component('chartline-component', require('./components/ChartLineComponent.vue'));
+Vue.component('chartpie-component', require('./components/ChartPieComponent.vue'));
+Vue.component('chartrandom-component', require('./components/ChartRandomComponent.vue'));
 
 // const files = require.context('./', true, /\.vue$/i)
 
