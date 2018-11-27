@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Events\newEvent;
+use App\Events;
 
 class StartController extends Controller
 {
@@ -130,4 +130,9 @@ class StartController extends Controller
             }
         }
     }
+
+    public function sendMessage(Request $request){
+        event(new \App\Events\NewMessage($request->input('message')));
+    }
+
 }

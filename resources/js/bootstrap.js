@@ -1,6 +1,12 @@
 
 window._ = require('lodash');
+
+import Echo from "laravel-echo"
 window.io = require('socket.io-client');
+window.Echo = new Echo({
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
+});
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

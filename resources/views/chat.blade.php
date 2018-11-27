@@ -5,7 +5,8 @@
 
 @section('content')
 
-    @include('layouts.vueMenu')
+    {{--@include('layouts.vueMenu')--}}
 
-    <socket-chat-component></socket-chat-component>
+    <chat-component></chat-component>
+
 @endsection

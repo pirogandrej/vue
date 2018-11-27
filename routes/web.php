@@ -2,7 +2,13 @@
 
 Route::get('/', function () {
     return view('welcome');
-})->name('main');
+});
+
+Route::post('messages', function (Illuminate\Http\Request $request) {
+    echo $request->input('body');
+    App\Events\Message::dispatch($request->input('body'));
+    return view('chat');
+});
 
 Auth::routes();
 
@@ -20,3 +26,7 @@ Route::get('/start/chartrandom', 'StartController@chartrandom')->name('chartrand
 Route::get('/start/data-chartrandom', 'StartController@chartDataRandom')->name('chartdatarandom');  /* getjson - random */
 
 Route::get('/start/socket-chart', 'StartController@newEvent')->name('start.newevent');
+Route::get('/start/send-message', 'StartController@sendMessage');
+Route::get('/translation/{id}', 'TranslationController@index');
+
+Route::get('chat', 'ChatController@getIndex');

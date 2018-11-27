@@ -33,7 +33,7 @@
             }
         },
         mounted () {
-            var socket = io('http://localhost:3000');
+            var socket = io.connect('http://localhost:3000');
             var app = this;
             socket.on("news-action:App\\Events\\NewEvent", function (data) {
                     app.data = data.result;
