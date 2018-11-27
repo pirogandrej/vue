@@ -10,6 +10,7 @@
     </h1>
 
     <chartline-component></chartline-component>
+    <socket-component></socket-component>
 
     @include('layouts.vueMenu')
 
