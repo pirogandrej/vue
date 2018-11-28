@@ -16,36 +16,6 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-    <script>
-        // var socket = io(':6001');
-        // socket
-        //     .on('message', function (data) {
-        //         console.log('From server: ', data);
-        //     })
-        //     .on('server-info', function (data) {
-        //         console.log('From server: ', data);
-        //     });
-
-
-        var socket = io(':6001');
-        window.$('form').on('submit', function () {
-            var text = window.$('textarea').val(),
-                msg = {message: text};
-            socket.send(msg);
-            return false;
-        });
-        function appendMessage(data) {
-            window.$('.chat').append(
-                window.$('<li/>').text(data.message)
-            );
-        }
-        socket.on('message', function (data) {
-            console.log(data);
-        });
-
-
-
-    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -109,24 +79,22 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
 
-                        <ul class="chat"></ul>
+            {{--<div class="container">--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-12">--}}
+                        {{--<ul class="chat"></ul>--}}
+                        {{--<hr>--}}
+                        {{--<form>--}}
+                            {{--<textarea class="textchat"></textarea>--}}
+                            {{--<input type="submit" value="Отправить"/>--}}
+                        {{--</form>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-                        <hr>
-                        <form>
-                            <textarea class="textchat"></textarea>
-                            <input type="submit" value="Отправить"/>
-                        </form>
+            @yield('content')
 
-
-
-                    </div>
-                </div>
-            </div>
-            {{--@yield('content')--}}
         </main>
     </div>
 </body>

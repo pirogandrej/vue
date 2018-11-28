@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="from-group">
+                <div class="form-group">
                     <textarea rows="6" readonly="" class="form-control">{{dataMessages.join('\n')}}</textarea>
                 </div>
                 <div class="input-group mb-3">

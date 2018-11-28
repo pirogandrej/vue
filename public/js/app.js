@@ -38534,8 +38534,12 @@ module.exports = __webpack_require__(314);
 
 /***/ }),
 /* 178 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll__ = __webpack_require__(318);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -38546,6 +38550,8 @@ module.exports = __webpack_require__(314);
 __webpack_require__(179);
 
 window.Vue = __webpack_require__(227);
+
+window.Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll___default.a);
 
 /**
  * The following block of code may be used to automatically register your
@@ -89874,7 +89880,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "from-group" }, [
+        _c("div", { staticClass: "form-group" }, [
           _c(
             "textarea",
             { staticClass: "form-control", attrs: { rows: "6", readonly: "" } },
@@ -90376,7 +90382,7 @@ exports = module.exports = __webpack_require__(175)(false);
 
 
 // module
-exports.push([module.i, "\n.textchat[data-v-4a1981dc]{\n    width: 100%;\n    height: 50px;\n}\n", ""]);
+exports.push([module.i, "\n.form-group[data-v-4a1981dc]{\n    width: 100%;\n    height: 40vh;\n    background-color: lightgrey;\n    overflow-y: auto;\n}\n", ""]);
 
 // exports
 
@@ -90414,52 +90420,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 var socket = io(':6001');
-$('form').on('submit', function () {
-    var text = $('textarea').val(),
-        msg = { message: text };
-    socket.send(msg);
-    return false;
-});
-// socket
+
+//    socket
 //     .on('message', function (data) {
 //         console.log('From server: ', data);
 //     })
 //     .on('server-info', function (data) {
 //         console.log('From server: ', data);
 //     });
-function appendMessage(data) {
-    $('.chat').append($('<li/>').text(data.message));
-}
-socket.on('message', function (data) {
-    console.log(data);
-});
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    prop: {
-        arraymsg: []
-    },
     data: function data() {
         return {
-            textmsg: '',
-            arraymsg: []
-
+            dataMessages: [],
+            message: ""
         };
     },
-
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        var app = this;
+        socket.on('message', function (data) {
+            console.log(data);
+            app.dataMessages.push(data);
+        }).on('server-info', function (data) {
+            console.log(data);
+            //                    app.dataMessages.push(data);
+        });
+    },
 
     methods: {
-        sendchat: function sendchat() {
-            var text = textmsg;
-            var msg = { message: text };
+        sendMessage: function sendMessage() {
+            var msg = { message: this.message };
+            this.dataMessages.push(msg);
             socket.send(msg);
-            arraymsg.push(msg.message);
-            text = '';
+            this.message = '';
         }
     }
-
 });
 
 /***/ }),
@@ -90470,30 +90470,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("ul", { staticClass: "chat" }),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "chat-scroll",
+                rawName: "v-chat-scroll",
+                value: { always: false, smooth: true },
+                expression: "{always: false, smooth: true}"
+              }
+            ],
+            staticClass: "form-group"
+          },
+          _vm._l(_vm.dataMessages, function(item) {
+            return _c("p", [_vm._v(_vm._s(item.message))])
+          })
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.message,
+                expression: "message"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Наберите сообщение" },
+            domProps: { value: _vm.message },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value
+              }
+            }
+          }),
           _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("form", [
-            _c("textarea", { staticClass: "textchat" }),
-            _vm._v(" "),
-            _c("input", { attrs: { type: "submit", value: "Отправить" } })
+          _c("div", { staticClass: "input-group-append" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-secondary",
+                attrs: { type: "button" },
+                on: { click: _vm.sendMessage }
+              },
+              [_vm._v("Отправить")]
+            )
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -90508,6 +90545,73 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (global, factory) {
+	 true ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global['vue-chat-scroll'] = factory());
+}(this, (function () { 'use strict';
+
+/**
+* @name VueJS vChatScroll (vue-chat-scroll)
+* @description Monitors an element and scrolls to the bottom if a new child is added
+* @author Theodore Messinezis <theo@theomessin.com>
+* @file v-chat-scroll  directive definition
+*/
+
+var scrollToBottom = function scrollToBottom(el, smooth) {
+  el.scroll({
+    top: el.scrollHeight,
+    behavior: smooth ? 'smooth' : 'instant'
+  });
+};
+
+var vChatScroll = {
+  bind: function bind(el, binding) {
+    var scrolled = false;
+
+    el.addEventListener('scroll', function (e) {
+      scrolled = el.scrollTop + el.clientHeight + 1 < el.scrollHeight;
+    });
+
+    new MutationObserver(function (e) {
+      var config = binding.value || {};
+      var pause = config.always === false && scrolled;
+      if (pause || e[e.length - 1].addedNodes.length != 1) return;
+      scrollToBottom(el, config.smooth);
+    }).observe(el, { childList: true });
+  },
+  inserted: scrollToBottom
+};
+
+/**
+* @name VueJS vChatScroll (vue-chat-scroll)
+* @description Monitors an element and scrolls to the bottom if a new child is added
+* @author Theodore Messinezis <theo@theomessin.com>
+* @file vue-chat-scroll plugin definition
+*/
+
+var VueChatScroll = {
+  install: function install(Vue, options) {
+    Vue.directive('chat-scroll', vChatScroll);
+  }
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(VueChatScroll);
+}
+
+return VueChatScroll;
+
+})));
+
 
 /***/ })
 /******/ ]);

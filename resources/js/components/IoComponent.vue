@@ -1,24 +1,27 @@
 <style scoped>
-    .textchat{
+    .form-group{
         width: 100%;
-        height: 50px;
+        height: 40vh;
+        background-color: lightgrey;
+        overflow-y: auto;
     }
 </style>
 
 <template>
     <div class="container">
-         <div class="row">
+        <div class="row">
             <div class="col-md-12">
 
-                <ul class="chat"></ul>
+                <div class="form-group" v-chat-scroll="{always: false, smooth: true}">
+                    <p v-for="item in dataMessages">{{item.message}}</p>
+                </div>
 
-                <hr>
-                <form>
-                    <textarea class="textchat"></textarea>
-                    <input type="submit" value="Отправить"/>
-                </form>
-
-
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Наберите сообщение" v-model="message">
+                    <div class="input-group-append">
+                        <button @click="sendMessage" class="btn btn-outline-secondary" type="button">Отправить</button>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -27,55 +30,42 @@
 
 <script>
     var socket = io(':6001');
-    $('form').on('submit', function () {
-        var text = $('textarea').val(),
-            msg = {message: text};
-        socket.send(msg);
-        return false;
-    });
-    // socket
-    //     .on('message', function (data) {
-    //         console.log('From server: ', data);
-    //     })
-    //     .on('server-info', function (data) {
-    //         console.log('From server: ', data);
-    //     });
-    function appendMessage(data) {
-        $('.chat').append(
-            $('<li/>').text(data.message)
-        );
-    }
-    socket.on('message', function (data) {
-        console.log(data);
-    });
 
+//    socket
+//     .on('message', function (data) {
+//         console.log('From server: ', data);
+//     })
+//     .on('server-info', function (data) {
+//         console.log('From server: ', data);
+//     });
 
-        export default {
-        prop: {
-            arraymsg: []
-        },
-        data: function(){
+    export default {
+        data: function () {
             return {
-                textmsg: '',
-                arraymsg: []
-
+                dataMessages: [],
+                message: "",
             }
         },
-
-        mounted(){
+        mounted () {
+            var app = this;
+            socket
+                .on ('message', function (data) {
+                        console.log(data);
+                        app.dataMessages.push(data);
+                })
+                .on('server-info', function (data) {
+                    console.log(data);
+//                    app.dataMessages.push(data);
+                });
         },
         methods: {
-            sendchat: function() {
-                var text = textmsg;
-                var msg = {message: text};
+            sendMessage: function () {
+                var msg = {message: this.message};
+                this.dataMessages.push(msg);
                 socket.send(msg);
-                arraymsg.push(msg.message);
-                text = '';
+                this.message = '';
             }
         }
-
     }
-
-
 
 </script>
