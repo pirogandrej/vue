@@ -1,8 +1,8 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::post('messages', function (Illuminate\Http\Request $request) {
     echo $request->input('body');
@@ -30,3 +30,4 @@ Route::get('/start/send-message', 'StartController@sendMessage');
 Route::get('/translation/{id}', 'TranslationController@index');
 
 Route::get('chat', 'ChatController@getIndex');
+Route::get('/', 'IoController@index');

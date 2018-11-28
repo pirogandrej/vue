@@ -28,6 +28,7 @@ Vue.component('socket-component', require('./components/SocketComponent.vue'));
 Vue.component('socket-chat-component', require('./components/SocketChatComponent.vue'));
 Vue.component('translation-component', require('./components/TranslationComponent.vue'));
 Vue.component('chat-component', require('./components/ChatComponent.vue'));
+Vue.component('io-component', require('./components/IoComponent.vue'));
 // const files = require.context('./', true, /\.vue$/i)
 
 // files.keys().map(key => {
